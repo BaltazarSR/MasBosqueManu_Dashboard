@@ -144,7 +144,7 @@ const columns: ColumnDef<z.infer<typeof schema>>[] = [
           borderColor: row.original.status === 'open' ? 'var(--badge-open-foreground)' : 'var(--badge-closed-foreground)'
         }}
       >
-        {row.original.status === 'open' ? "activa" : "resuelta" }
+        {row.original.status === 'open' ? "Activa" : "Resuelta" }
       </Badge>
     ),
   },
@@ -216,7 +216,9 @@ const columns: ColumnDef<z.infer<typeof schema>>[] = [
   {
     id: "actions",
     cell: ({ row, table }) => {
-      const handleMarkAsResolved = async () => {
+      const handleMarkAsResolved = async (e: React.MouseEvent) => {
+        e.stopPropagation()
+        
         const alert = row.original
         if (alert.status === 'closed') {
           toast.error('Esta alerta ya está resuelta')
@@ -252,26 +254,16 @@ const columns: ColumnDef<z.infer<typeof schema>>[] = [
       }
 
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button
-              variant="ghost"
-              className="data-[state=open]:bg-muted text-muted-foreground flex size-8"
-              size="icon"
-            >
-              <IconDotsVertical />
-              <span className="sr-only">Abrir Menú</span>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-50">
-            <DropdownMenuItem 
-              onClick={handleMarkAsResolved}
-              disabled={row.original.status === 'closed'}
-            >
-              Marcar como resuelta
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={handleMarkAsResolved}
+          disabled={row.original.status === 'closed'}
+          className="text-sm"
+        >
+          <IconCircleCheckFilled className="mr-2 size-4" />
+          Marcar como resuelta
+        </Button>
       )
     },
   },
@@ -425,6 +417,7 @@ function AlertsTable({
                     <TableHead 
                       key={header.id} 
                       colSpan={header.colSpan}
+                      className="px-10"
                       style={{ width: header.getSize() !== 150 ? `${header.getSize()}px` : 'auto' }}
                     >
                       {header.isPlaceholder
@@ -565,7 +558,7 @@ function DrawerRow({ row, item }: { row: Row<z.infer<typeof schema>>, item: z.in
       <DrawerTrigger asChild>
         <TableRow data-state={row.getIsSelected() && "selected"} className="cursor-pointer">
           {row.getVisibleCells().map((cell) => (
-            <TableCell key={cell.id}>
+            <TableCell key={cell.id} className="px-10">
               {flexRender(cell.column.columnDef.cell, cell.getContext())}
             </TableCell>
           ))}

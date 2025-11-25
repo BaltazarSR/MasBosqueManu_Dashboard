@@ -56,7 +56,7 @@ export function NavUser({
   }
 
   return (
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 justify-between">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="flex items-center gap-2 rounded-lg px-3 py-2 text-left text-sm hover:bg-accent">
@@ -80,13 +80,18 @@ export function NavUser({
               align="end"
               sideOffset={4}
             >
-              <DropdownMenuItem onClick={handleLogout}>
-                <IconLogout />
-                Log out
+              <DropdownMenuItem>
+                <IconUserCircle />
+                Cuenta
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          <ThemeToggle />
+          <div className="flex items-center gap-2 px-4">
+            <ThemeToggle />
+            <Button onClick={handleLogout} variant="outline" className="flex items-center gap-2 rounded-lg px-3 py-2 text-left text-sm hover:bg-accent">
+              Log out
+            </Button>
+          </div>
         </div>
   )
 }

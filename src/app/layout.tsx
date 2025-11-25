@@ -17,8 +17,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "+Bosque Manu Dashboard",
+  title: "+Bosque Manu",
   description: "Emergency alert dashboard for Bosque Manu forest protection",
+  icons: {
+    icon: '/favicon.ico',
+  },
 };
 
 export default function RootLayout({
